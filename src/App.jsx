@@ -6,7 +6,7 @@ import {Routes,Route} from 'react-router-dom'
 import Tasks from './pages/tasks'
 import Login from './pages/login'
 import Register from './pages/register'
-import NavBar from './navbar'
+import NavBar from './components/navbar'
 import Profile from './pages/profile'
 
 function App() {
