@@ -7,16 +7,16 @@ const TaskBox = ({task,onComplete, onDelete}) => {
 
         <div>
 
-            <h3> {task.taskname} </h3>
-            <p> {task.taskDesc} </p>
-            <p> {task.deadline} </p>
-            <p> {task.difficulty} </p>
+            <span> <b>{task.taskname}</b> </span>
+            <span> {task.taskDesc} </span>
+            <span> {task.deadline} </span>
+            <span> {task.difficulty} </span>
 
         
-            { task.status !== "completed" && <button onClick={ () => onComplete(task.id)}>Complete</button> }
+            { task.status !== "completed" && <button onClick={ () => onComplete(task.taskId)}>Complete</button> }
             
             
-            <button onClick={() => onDelete(task.id)}> Delete </button>
+            <button onClick={() => onDelete(task.taskId)}> Delete </button>
 
 
         </div>
