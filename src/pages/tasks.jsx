@@ -24,7 +24,6 @@ const Tasks = () => {
                 .catch(
                     (error) => {
                         console.log("ERROR")
-                        alert("ERrror!!!");
                     }
                 )
         },
@@ -34,8 +33,11 @@ const Tasks = () => {
     const handleComplete = async (id) => {
         console.log("complete button clicked! "+id);
         try{
-            const response = await axios.put(`${apiUrl}/tasks/${id}` , {withCredentials:true,});
-            setTasks(response.data);
+            await axios.put(`${apiUrl}/tasks/${id}` , {withCredentials:true,});
+            setTasks((tasks)=>
+                tasks.map((task)=> task.taskId === id ? {...task, status : "completed"} : task )
+            );
+
             console.log("completed "+id);
         }
         catch(error){ console.log("error");}
@@ -43,8 +45,8 @@ const Tasks = () => {
     const handleDelete = async (id) => {
         console.log("delete button clicked "+id);
         try{
-            const response = await axios.delete(`${apiUrl}/tasks/${id}`, {withCredentials:true,});
-            setTasks(response.data);
+            await axios.delete(`${apiUrl}/tasks/${id}`, {withCredentials:true,});
+            setTasks(tasks.filter(task => task.taskId !== id));
             console.log("deleted "+id);
         }
         catch(error){console.log("error");}
@@ -56,9 +58,9 @@ const Tasks = () => {
         console.log(newTask);
 
         try{
-            const response = await axios.post(`${apiUrl}/tasks`,newTask, {withCredentials:true,});
+            const response = await axios.post(`${apiUrl}/tasks`,newTask, {headers: { 'Content-Type':'application/json',}, withCredentials:true,});
+            setTasks((tasks)=> [...tasks, response.data] );
             console.log('added!')
-            setTasks(response.data);
         }
         catch(error){console.log("error");}
 
